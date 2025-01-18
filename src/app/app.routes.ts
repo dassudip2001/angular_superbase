@@ -1,12 +1,14 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './auth.guard';
+import { authGuard } from './pages/services/auth.guard';
 import { ContentWrapperComponent } from './shared/content-wrapper.component';
 
 export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/login/login.component').then((m) => m.LoginComponent),
+      import('./pages/views/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
   },
   {
     path: 'dashboard',
@@ -16,7 +18,9 @@ export const routes: Routes = [
       {
         path: 'chat',
         loadComponent: () =>
-          import('./pages/chat/chat.component').then((m) => m.ChatComponent),
+          import('./pages/views/chat/chat.component').then(
+            (m) => m.ChatComponent
+          ),
       },
       {
         path: 'category',

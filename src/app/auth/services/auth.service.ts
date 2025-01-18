@@ -1,16 +1,13 @@
-import { inject, Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment.development';
-import { Router } from '@angular/router';
-import { AuthT } from '../pages/login/login-type';
+import { environment } from '../../../environments/environment.development';
+import { AuthT } from '../views/login/login-type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private superbase: SupabaseClient;
-  private router = inject(Router);
-  private ngZone = inject(NgZone);
 
   constructor() {
     this.superbase = createClient(

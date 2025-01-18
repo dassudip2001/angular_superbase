@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { AuthT } from './login-type';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'drawing-login',
