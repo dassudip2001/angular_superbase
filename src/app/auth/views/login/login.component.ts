@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthT } from './login-type';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'drawing-login',
@@ -11,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   private auth = inject(AuthService);
+  private router = inject(Router);
 
   async authLogin() {
     const data: AuthT = {
@@ -19,5 +21,6 @@ export class LoginComponent {
     };
     console.log('authLogin');
     await this.auth.signInWithEmail(data);
+    this.router.navigate(['/drawing']);
   }
 }

@@ -1,24 +1,24 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './pages/services/auth.guard';
 import { ContentWrapperComponent } from './shared/content-wrapper.component';
+import { authGuard } from './auth/services/auth.guard';
 
 export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () =>
-      import('./pages/views/login/login.component').then(
+      import('./auth/views/login/login.component').then(
         (m) => m.LoginComponent
       ),
   },
   {
-    path: 'dashboard',
+    path: 'drawing',
     component: ContentWrapperComponent,
     canActivate: [authGuard],
     children: [
       {
         path: 'chat',
         loadComponent: () =>
-          import('./pages/views/chat/chat.component').then(
+          import('./auth/views/chat/chat.component').then(
             (m) => m.ChatComponent
           ),
       },
@@ -39,13 +39,13 @@ export const routes: Routes = [
       {
         path: '',
         redirectTo: 'chat',
-        pathMatch: 'full', // Apply redirection ONLY for empty child paths
+        pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'drawing',
     pathMatch: 'full', // Redirect root path to 'dashboard'
   },
 ];

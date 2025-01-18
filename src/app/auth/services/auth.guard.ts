@@ -7,6 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     (inject(Router) as Router).navigate(['login']);
     return false;
   } else {
+    // inject(Router).navigate(['drawing']);
     return true;
   }
 };

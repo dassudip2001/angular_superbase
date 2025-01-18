@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment.development';
 import { AuthT } from '../views/login/login-type';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -16,11 +17,12 @@ export class AuthService {
     );
     this.superbase.auth.onAuthStateChange((event, session) => {
       if (session) {
-        console.log('logged in');
+        // this.router.navigate(['drawing']);
       } else {
         console.log('logged out');
       }
       localStorage.setItem('session', JSON.stringify(session?.user));
+
       // if (session?.user) {
       //   this.ngZone.run(() => {
       //     this.router.navigate(['dashboard']);
@@ -29,11 +31,13 @@ export class AuthService {
     });
   }
 
+  // check if user is logged in
   get isLoggedIn() {
     const user = localStorage.getItem('session') as string;
     return user === 'undefined' ? false : true;
   }
 
+  // login
   async signInWithEmail(auth: AuthT) {
     const { data, error } = await this.superbase.auth.signInWithPassword({
       email: auth.email,
@@ -41,6 +45,7 @@ export class AuthService {
     });
   }
 
+  // signup
   async signUpNewUser(auth: AuthT) {
     const { data, error } = await this.superbase.auth.signUp({
       email: auth.email,
@@ -51,6 +56,7 @@ export class AuthService {
     });
   }
 
+  // logout
   async signout() {
     return await this.superbase.auth.signOut();
   }
