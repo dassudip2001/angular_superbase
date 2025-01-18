@@ -1,19 +1,47 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
+import { ContentWrapperComponent } from './shared/content-wrapper.component';
 
 export const routes: Routes = [
   {
-    path: 'chat',
-    canActivate: [authGuard],
-    loadComponent:()=>import('./pages/chat/chat.component').then(m=>m.ChatComponent)
+    path: 'login',
+    loadComponent: () =>
+      import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'login',
-    loadComponent:()=>import('./pages/login/login.component').then(m=>m.LoginComponent)
+    path: 'dashboard',
+    component: ContentWrapperComponent,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'chat',
+        loadComponent: () =>
+          import('./pages/chat/chat.component').then((m) => m.ChatComponent),
+      },
+      {
+        path: 'category',
+        loadComponent: () =>
+          import('./features/views/category/category.component').then(
+            (m) => m.CategoryComponent
+          ),
+      },
+      {
+        path: 'posts',
+        loadComponent: () =>
+          import('./features/views/posts/posts.component').then(
+            (m) => m.PostsComponent
+          ),
+      },
+      {
+        path: '',
+        redirectTo: 'chat',
+        pathMatch: 'full', // Apply redirection ONLY for empty child paths
+      },
+    ],
   },
   {
     path: '',
-    redirectTo: '/login',
-    pathMatch: 'full'
-  }
+    redirectTo: 'dashboard',
+    pathMatch: 'full', // Redirect root path to 'dashboard'
+  },
 ];

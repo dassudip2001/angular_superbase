@@ -1,7 +1,8 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment.development';
 import { Router } from '@angular/router';
+import { AuthT } from '../pages/login/login-type';
 
 @Injectable({
   providedIn: 'root',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private superbase: SupabaseClient;
   private router = inject(Router);
+  private ngZone = inject(NgZone);
 
   constructor() {
     this.superbase = createClient(
@@ -22,9 +24,11 @@ export class AuthService {
         console.log('logged out');
       }
       localStorage.setItem('session', JSON.stringify(session?.user));
-      if (session?.user) {
-        this.router.navigate(['chat']);
-      }
+      // if (session?.user) {
+      //   this.ngZone.run(() => {
+      //     this.router.navigate(['dashboard']);
+      //   });
+      // }
     });
   }
 
@@ -33,17 +37,17 @@ export class AuthService {
     return user === 'undefined' ? false : true;
   }
 
-  async signInWithEmail() {
+  async signInWithEmail(auth: AuthT) {
     const { data, error } = await this.superbase.auth.signInWithPassword({
-      email: 'sudip5428@gmail.com',
-      password: 'Sudip@123',
+      email: auth.email,
+      password: auth.password,
     });
   }
 
-  async sugnUpNewUser() {
+  async signUpNewUser(auth: AuthT) {
     const { data, error } = await this.superbase.auth.signUp({
-      email: 'sudip5428@gmail.com',
-      password: 'Sudip@123',
+      email: auth.email,
+      password: auth.password,
       options: {
         emailRedirectTo: '/chat',
       },
