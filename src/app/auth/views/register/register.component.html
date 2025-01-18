@@ -16,7 +16,7 @@
         Welcome Back
       </div>
       <!-- form -->
-      <form (submit)="onSubmit()" [formGroup]="loginForm">
+      <form>
         <div class="username">
           <label
             htmlFor="email"
@@ -95,19 +95,9 @@
           </div>
         </div>
 
-        <div class="forgot-password text-right mb-2">
-          <a
-            href="/forgot-password"
-            class="text-sm text-blue-500 hover:underline"
-          >
-            Forgot Password?
-          </a>
-        </div>
-
-        <div class="flex justify-center items-center w-full">
+        <div class="flex justify-center items-center w-full mt-4">
           <button
             type="submit"
-            [disabled]="!loginForm.valid"
             class="text-white bg-blue-700 w-full hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:opacity-50"
           >
             login
@@ -118,12 +108,12 @@
         OR
       </div>
       <div class="text-black dark:text-white space-x-2 text-center">
-        Don&apos;t have an account?
+        Alredy have an account?
         <a
-          routerLink="/register"
+          routerLink="/login"
           class="text-sm text-blue-500 hover:underline mx-1"
         >
-          Sign Up
+          Sign In
         </a>
       </div>
     </div>

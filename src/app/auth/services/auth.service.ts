@@ -3,12 +3,15 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../../environments/environment.development';
 import { AuthT } from '../views/login/login-type';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private superbase: SupabaseClient;
+
+  private _ts = inject(ToastrService);
 
   constructor() {
     this.superbase = createClient(
@@ -43,6 +46,12 @@ export class AuthService {
       email: auth.email,
       password: auth.password,
     });
+    if (error) {
+      console.log(error.code);
+      this._ts.error(error.code);
+      return;
+    }
+    return data;
   }
 
   // signup
@@ -54,6 +63,13 @@ export class AuthService {
         emailRedirectTo: '/chat',
       },
     });
+    if (error) {
+      console.log(error.code);
+
+      this._ts.error(error.code);
+      return;
+    }
+    return data;
   }
 
   // logout
