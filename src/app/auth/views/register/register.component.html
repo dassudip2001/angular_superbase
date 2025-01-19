@@ -16,7 +16,7 @@
         Welcome Back
       </div>
       <!-- form -->
-      <form>
+      <form (submit)="onSubmit()" [formGroup]="registerForm">
         <div class="username">
           <label
             htmlFor="email"
